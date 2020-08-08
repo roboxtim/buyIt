@@ -4,10 +4,13 @@ enum Environments {
 }
 
 class Environment {
+    private accessToken : String;
     private environment: String;
 
     constructor(environment: String) {
         this.environment = environment;
+
+        this.accessToken = 'J!69gYKp!4q)8L0RHFG0Ef(y';
     }
 
     getPort(): Number {

@@ -1,3 +1,4 @@
+import env from '../../environment';
 import { Response } from 'express';
 import { response_status_codes } from './model';
 const jwt = require('jsonwebtoken');
@@ -8,7 +9,7 @@ export function authenticateJWT(req, res, next) {
     if (authHeader) {
         const token = authHeader.split(' ')[1];
 
-        jwt.verify(token, process.env.accessToken, (err, user) => {
+        jwt.verify(token, env['accessToken'], (err, user) => {
 
             if (err) {
                 return res.sendStatus(403);

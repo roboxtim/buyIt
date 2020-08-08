@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import {insufficientParameters, mongoError, successResponse, failureResponse} from '../modules/common/service';
 import {IUser} from '../modules/users/model';
 import UserService from '../modules/users/service';
+import env from '../environment';
 
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
@@ -89,7 +90,7 @@ export class UserController {
             email: email,
             id: _id,
             exp: exp,
-        }, process.env.accessToken);
+        }, env['accessToken']);
 
     }
 

@@ -5,12 +5,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     name: String,
-    email: {
-        type: String,
-        unique : true
-    },
-    salt: String,
-    hash: String,
+    user_id: String,
     is_deleted: {
         type: Boolean,
         default: false
