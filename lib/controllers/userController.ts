@@ -6,31 +6,9 @@ import UserService from '../modules/users/service';
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-const accessTokenSecret = 'rD7hEa^)SF6bGTAa*P@0#ljQ';
-
 export class UserController {
 
     private user_service: UserService = new UserService();
-
-    public static authenticateJWT = (req, res, next) => {
-        const authHeader = req.headers.authorization;
-
-        if (authHeader) {
-            const token = authHeader.split(' ')[1];
-
-            jwt.verify(token, accessTokenSecret, (err, user) => {
-
-                if (err) {
-                    return res.sendStatus(403);
-                }
-
-                req.user = user;
-                next();
-            });
-        } else {
-            res.sendStatus(401);
-        }
-    };
 
     public createUser(req: Request, res: Response) {
         if (req.body.name &&
@@ -111,7 +89,7 @@ export class UserController {
             email: email,
             id: _id,
             exp: exp,
-        }, accessTokenSecret);
+        }, process.env.accessToken);
 
     }
 

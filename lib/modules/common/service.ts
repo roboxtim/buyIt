@@ -1,5 +1,26 @@
 import { Response } from 'express';
 import { response_status_codes } from './model';
+const jwt = require('jsonwebtoken');
+
+export function authenticateJWT(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+
+        jwt.verify(token, process.env.accessToken, (err, user) => {
+
+            if (err) {
+                return res.sendStatus(403);
+            }
+
+            req.user = user;
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+}
 
 export function successResponse(message: string, DATA: any, res: Response) {
     res.status(response_status_codes.success).json({
