@@ -24,8 +24,6 @@ export class UserController {
                     return res.sendStatus(403);
                 }
 
-                console.log(user);
-
                 req.user = user;
                 next();
             });

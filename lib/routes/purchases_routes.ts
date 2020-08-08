@@ -10,7 +10,7 @@ export class PurchasesRoutes{
     public route(app: Application) {
 
         app.post('/purchases', UserController.authenticateJWT, (req: Request, res: Response) => {
-
+            this.user_controller.createPurchases(req, res);
         });
 
     }

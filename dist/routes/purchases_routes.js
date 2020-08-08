@@ -9,6 +9,7 @@ class PurchasesRoutes {
     }
     route(app) {
         app.post('/purchases', UserController_1.UserController.authenticateJWT, (req, res) => {
+            this.user_controller.createPurchases(req, res);
         });
     }
 }
