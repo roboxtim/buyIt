@@ -1,4 +1,4 @@
-import { IPurchases } from './model';
+import {IPurchases} from './model';
 import purchases from './schema';
 
 export default class PurchasesService {
@@ -10,6 +10,14 @@ export default class PurchasesService {
 
     public getPurchases(query: any, callback: any) {
         purchases.find(query, callback);
+    }
+
+    public updatePurchases(query: any, replace: any, callback: any) {
+        purchases.updateOne(query, replace, callback);
+    }
+
+    public deletePurchases(query : any, callback : any) {
+        purchases.deleteOne(query, callback);
     }
 
 }

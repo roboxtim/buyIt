@@ -51,4 +51,54 @@ export class PurchasesController {
         }
     }
 
+    public updatePurchases(req: Request, res: Response) {
+        if (req['user'] &&
+            req['body']['id'] &&
+            req['body']['name']) {
+            this.purchases_service.updatePurchases(
+                {
+                    _id: req['body']['id'],
+                    user_id: req['user'].id
+                },
+                {
+                    name: req['body']['name']
+                },
+                (err: any, purchase_data: IPurchases) => {
+                    if (err) {
+                        mongoError(err, res);
+                    } else {
+                        successResponse('Update purchases', purchase_data, res);
+                    }
+                });
+        } else {
+            insufficientParameters(res);
+        }
+    }
+
+    public deletePurchases(req: Request, res: Response) {
+        if (req['user'] &&
+            req['body']['id']) {
+
+            console.log({
+                _id: req['body']['id'],
+                user_id: req['user'].id,
+            });
+            this.purchases_service.deletePurchases(
+                {
+                _id: req['body']['id'],
+                user_id: req['user'].id,
+            },
+                (err: any, purchase_data: IPurchases) => {
+                if (err) {
+                    mongoError(err, res);
+                } else {
+                    successResponse('Delete purchases', purchase_data, res);
+                }
+            });
+        } else {
+            insufficientParameters(res);
+        }
+    }
+
+
 }

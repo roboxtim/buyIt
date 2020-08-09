@@ -16,5 +16,12 @@ export class PurchasesRoutes {
             this.user_controller.getPurchases(req, res);
         });
 
+        app.put('/purchases', authenticateJWT, (req: Request, res: Response) => {
+            this.user_controller.updatePurchases(req, res);
+        });
+
+        app.delete('/purchases', authenticateJWT, (req: Request, res: Response) => {
+            this.user_controller.deletePurchases(req, res);
+        });
     }
 }
