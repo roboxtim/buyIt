@@ -2,7 +2,8 @@ import {Request, Response} from 'express';
 import {insufficientParameters, mongoError, successResponse, failureResponse} from '../modules/common/service';
 import {IPurchases} from '../modules/purchases/model';
 import PurchasesService from '../modules/purchases/service';
-import {IUser} from "../modules/users/model";
+
+const ObjectId = require('mongodb').ObjectId;
 
 export class PurchasesController {
 
@@ -21,8 +22,6 @@ export class PurchasesController {
                 }]
             };
 
-            console.log(purchases_params);
-
             this.purchases_service.createPurchases(purchases_params, (err: any, purchase_data: IPurchases) => {
                 if (err) {
                     mongoError(err, res);
@@ -31,6 +30,22 @@ export class PurchasesController {
                 }
             });
 
+        } else {
+            insufficientParameters(res);
+        }
+    }
+
+    public getPurchases(req: Request, res: Response) {
+        if (req['user']) {
+            this.purchases_service.getPurchases({
+                user_id: req['user'].id
+            }, (err: any, purchase_data: IPurchases) => {
+                if (err) {
+                    mongoError(err, res);
+                } else {
+                    successResponse('Get purchases', purchase_data, res);
+                }
+            });
         } else {
             insufficientParameters(res);
         }

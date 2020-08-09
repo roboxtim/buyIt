@@ -1,9 +1,8 @@
-
-import { Application, Request, Response } from 'express';
-import { PurchasesController } from '../controllers/purchasesController';
+import {Application, Request, Response} from 'express';
+import {PurchasesController} from '../controllers/purchasesController';
 import {authenticateJWT} from '../modules/common/service';
 
-export class PurchasesRoutes{
+export class PurchasesRoutes {
 
     private user_controller: PurchasesController = new PurchasesController();
 
@@ -11,6 +10,10 @@ export class PurchasesRoutes{
 
         app.post('/purchases', authenticateJWT, (req: Request, res: Response) => {
             this.user_controller.createPurchases(req, res);
+        });
+
+        app.get('/purchases', authenticateJWT, (req: Request, res: Response) => {
+            this.user_controller.getPurchases(req, res);
         });
 
     }

@@ -8,4 +8,8 @@ export default class PurchasesService {
         _session.save(callback);
     }
 
+    public getPurchases(query: any, callback: any) {
+        purchases.find(query, callback);
+    }
+
 }
