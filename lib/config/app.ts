@@ -17,6 +17,9 @@ class App {
         this.app = express();
         this.config();
         this.mongoSetup();
+
+        this.app.use(express.static('public/src/dist'));
+
         this.user_routes.route(this.app);
         this.purchases_routes.route(this.app);
     }
