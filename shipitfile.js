@@ -2,7 +2,7 @@ module.exports = shipit => {
     require('shipit-deploy')(shipit);
     require('shipit-shared')(shipit);
 
-    const appName = 'hello';
+    const appName = 'server';
 
     shipit.initConfig({
         default: {
@@ -22,8 +22,8 @@ module.exports = shipit => {
     const path = require('path');
     const ecosystemFilePath = path.join(
         shipit.config.deployTo,
-        'shared',
-        'ecosystem.config.js'
+        'dist',
+        'server.js'
     );
 
     // Our listeners and tasks will go here
@@ -65,7 +65,7 @@ module.exports = shipit => {
     });
 
     shipit.blTask('npm-install', async () => {
-        shipit.remote(`cd ${shipit.releasePath} && npm install --production && tsc`);
+        shipit.remote(`cd ${shipit.releasePath} && npm install --production && tsc && cd public && yarn build`);
     });
 
     shipit.blTask('pm2-server', async () => {
