@@ -66,6 +66,7 @@ module.exports = shipit => {
 
     shipit.blTask('npm-install', async () => {
         shipit.remote(`cd ${shipit.releasePath} && npm install --production && tsc`);
+        console.log(`PATHHHHH - ${shipit.releasePath}`);
     });
 
     shipit.blTask('pm2-server', async () => {
