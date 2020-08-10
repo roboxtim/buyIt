@@ -12,7 +12,7 @@ export function authenticateJWT(req, res, next) {
         jwt.verify(token, env['accessToken'], (err, user) => {
 
             if (err) {
-                return res.sendStatus(403);
+                res.sendStatus(401);
             }
 
             req.user = user;
