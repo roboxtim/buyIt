@@ -4,11 +4,11 @@
         "moduleResolution": "node",
         "pretty": true,
         "target": "es6",
-        "outDir": "./dist",
+        "outDir": "./",
         "baseUrl": "./lib"
     },
     "include": [
-        "lib/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
         "node_modules"

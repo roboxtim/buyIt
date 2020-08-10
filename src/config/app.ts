@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import environment from "../environment";
 import { UserRoutes } from "../routes/user_routes";
 import { PurchasesRoutes } from "../routes/purchases_routes";
+import { AppRoute } from "../routes/app";
 
 class App {
 
@@ -12,13 +13,14 @@ class App {
 
     private user_routes: UserRoutes = new UserRoutes();
     private purchases_routes: PurchasesRoutes = new PurchasesRoutes();
+    private app_route: AppRoute = new AppRoute();
 
     constructor() {
         this.app = express();
         this.config();
         this.mongoSetup();
 
-        this.app.use(express.static(__dirname));
+        this.app_route.route(this.app);
 
         this.user_routes.route(this.app);
         this.purchases_routes.route(this.app);
