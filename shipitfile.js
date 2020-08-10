@@ -22,7 +22,7 @@ module.exports = shipit => {
     const path = require('path');
     const ecosystemFilePath = path.join(
         shipit.config.deployTo,
-        'dist',
+        '',
         'server.js'
     );
 
@@ -65,7 +65,7 @@ module.exports = shipit => {
     });
 
     shipit.blTask('npm-install', async () => {
-        shipit.remote(`cd ${shipit.releasePath} && npm install --production && tsc && cd public && yarn build`);
+        shipit.remote(`cd ${shipit.releasePath} && npm install --production && tsc`);
     });
 
     shipit.blTask('pm2-server', async () => {
