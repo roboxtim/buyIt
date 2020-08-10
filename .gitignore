@@ -13,5 +13,4 @@ gulpfile.js
 # Dependency directories
 node_modules/
 jspm_packages/
-dist/
 src/.env
