@@ -42,7 +42,7 @@ module.exports = shipit => {
               apps: [
                 {
                   name: '${appName}',
-                  script: '${shipit.releasePath}/dist/server.js',
+                  script: '${shipit.releasePath}/server.js',
                   watch: true,
                   autorestart: true,
                   restart_delay: 1000,
