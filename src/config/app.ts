@@ -2,8 +2,10 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import environment from "../environment";
-import { UserRoutes } from "../routes/user_routes";
-import { PurchasesRoutes } from "../routes/purchases_routes";
+import {UserRoutes} from "../routes/user_routes";
+import {PurchasesRoutes} from "../routes/purchases_routes";
+
+const path = require('path');
 
 class App {
 
@@ -17,6 +19,10 @@ class App {
         this.app = express();
         this.config();
         this.mongoSetup();
+
+        this.app.get('/', function (req, res) {
+            res.sendFile(path.join(__dirname + '/../public/dist/index.html'));
+        });
 
         this.user_routes.route(this.app);
         this.purchases_routes.route(this.app);
