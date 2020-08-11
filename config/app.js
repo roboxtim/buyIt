@@ -15,6 +15,7 @@ class App {
         this.app = express();
         this.config();
         this.mongoSetup();
+        this.app.use(express.static(path.join(__dirname + '/../public/dist/')));
         this.app.get('/', function (req, res) {
             res.sendFile(path.join(__dirname + '/../public/dist/index.html'));
         });
