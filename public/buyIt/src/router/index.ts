@@ -2,10 +2,9 @@ import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
 import Home from '../components/Home.vue'
 import Login from '../components/Login.vue'
+import api from "@/api/utils";
 
 Vue.use(VueRouter);
-
-const token = localStorage.getItem('token');
 
 const routes: Array<RouteConfig> = [
     {
@@ -26,7 +25,7 @@ const router = new VueRouter({
 
 router.beforeEach(
     (to, from, next) => {
-        if(!token && to.path !== '/login') {
+        if(!api.token && to.path !== '/login') {
             next({
                 path: '/login'
             })

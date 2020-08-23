@@ -7,7 +7,7 @@ const authModule: Module<any, any> = {
     state: {
         message: '',
         status: '',
-        token: localStorage.getItem('token') || '',
+        token: api.token,
         user: {}
     },
 
