@@ -4,8 +4,6 @@
 
         <div class="container" v-bind:class="[status]">
 
-            TEST
-
             <div class="md-layout md-gutter">
 
                 <div class="md-layout-item">
