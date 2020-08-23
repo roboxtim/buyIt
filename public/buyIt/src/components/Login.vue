@@ -27,7 +27,7 @@
 
             </div>
 
-            <md-snackbar :md-position="'center'" :md-duration="4000" :md-active.sync="message" md-persistent>
+            <md-snackbar :md-position="'center'" :md-duration="4000" :md-active.sync="showSnackbar" md-persistent>
                 <span v-html="message"></span>
             </md-snackbar>
 
@@ -48,28 +48,34 @@
         data: () => {
             return {
                 isRegistering: false,
+                showSnackbar: false,
+
 
                 email: '',
                 password: '',
 
             }
         },
-        mounted : () => {
+        mounted: () => {
             store.commit('changeTitle', 'Login');
         },
         computed: {
             ...mapState<IStateProfile>({
                 status: state => state.auth.status,
                 message: state => state.auth.message,
-            })
+            }),
         },
         methods: {
             login: function () {
                 let email = this.email;
                 let password = this.password;
                 this.$store.dispatch('auth/login', {email, password})
-                    .then(() => this.$router.push('/'))
-                    .catch(err => console.log(err))
+                    .then(() => {
+                        this.$router.push('/');
+                    })
+                    .catch(err => console.log(err));
+
+                this.$set(this, 'showSnackbar', true);
             }
         }
     });

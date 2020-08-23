@@ -3,7 +3,7 @@
               apps: [
                 {
                   name: 'server',
-                  script: '/home/buyIt/releases/20200822132121/server.js',
+                  script: '/home/buyIt/releases/20200823105959/server.js',
                   watch: true,
                   autorestart: true,
                   restart_delay: 1000,
