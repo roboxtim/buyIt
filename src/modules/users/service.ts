@@ -9,7 +9,7 @@ export default class UserService {
     }
 
     public filterUser(query: any, callback: any) {
-        users.findOne(query, callback);
+        return users.findOne(query, callback);
     }
 
 }

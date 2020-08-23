@@ -7,7 +7,7 @@ class UserService {
         _session.save(callback);
     }
     filterUser(query, callback) {
-        schema_1.default.findOne(query, callback);
+        return schema_1.default.findOne(query, callback);
     }
 }
 exports.default = UserService;

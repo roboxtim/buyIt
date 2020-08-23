@@ -46,8 +46,8 @@ class UserController {
             const user_filter = { email: req.body.email };
             /*Find user*/
             this.user_service.filterUser(user_filter, (err, user_data) => {
-                if (err) {
-                    service_1.mongoError(err, res);
+                if (err || user_data === null) {
+                    service_1.failureResponse('User not found', 'Not Found', res);
                 }
                 else {
                     if (!UserController.validatePassword(req.body.password, user_data.hash, user_data.salt)) {

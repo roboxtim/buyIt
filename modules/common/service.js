@@ -23,33 +23,33 @@ function authenticateJWT(req, res, next) {
 exports.authenticateJWT = authenticateJWT;
 function successResponse(message, DATA, res) {
     res.status(model_1.response_status_codes.success).json({
-        STATUS: 'SUCCESS',
-        MESSAGE: message,
-        DATA
+        status: 'SUCCESS',
+        message: message,
+        data: DATA
     });
 }
 exports.successResponse = successResponse;
 function failureResponse(message, DATA, res) {
-    res.status(model_1.response_status_codes.success).json({
-        STATUS: 'FAILURE',
-        MESSAGE: message,
-        DATA
+    res.status(model_1.response_status_codes.bad_request).json({
+        status: 'FAILURE',
+        message: message,
+        data: DATA
     });
 }
 exports.failureResponse = failureResponse;
 function insufficientParameters(res) {
     res.status(model_1.response_status_codes.bad_request).json({
-        STATUS: 'FAILURE',
-        MESSAGE: 'Insufficient parameters',
-        DATA: {}
+        status: 'FAILURE',
+        message: 'Insufficient parameters',
+        data: {}
     });
 }
 exports.insufficientParameters = insufficientParameters;
 function mongoError(err, res) {
     res.status(model_1.response_status_codes.internal_server_error).json({
-        STATUS: 'FAILURE',
-        MESSAGE: 'MongoDB error',
-        DATA: err
+        status: 'FAILURE',
+        message: 'MongoDB error',
+        data: err
     });
 }
 exports.mongoError = mongoError;
