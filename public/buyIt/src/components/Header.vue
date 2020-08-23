@@ -16,13 +16,14 @@
 <script lang="ts">
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    import router from '../router'
+    import router from '../router';
+    import {IStateRoot} from "@/store/interface";
 
     export default Vue.extend({
         name: 'Header',
 
         computed: {
-            ...mapState({
+            ...mapState<IStateRoot>({
                 pageTitle: state => state.pageTitle,
             }),
         },

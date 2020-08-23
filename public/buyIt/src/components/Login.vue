@@ -27,9 +27,9 @@
 
             </div>
 
-            <md-toolbar :class="{'md-accent' : status === 'error', 'md-primary' : status === 'loading'}" v-if="message">
-                <h3 class="md-title" v-html="message"></h3>
-            </md-toolbar>
+            <md-snackbar :md-position="'center'" :md-duration="4000" :md-active.sync="message" md-persistent>
+                <span v-html="message"></span>
+            </md-snackbar>
 
         </div>
 
@@ -41,6 +41,7 @@
     import Vue from 'vue';
     import {mapState} from 'vuex';
     import store from "@/store";
+    import {IStateProfile} from "@/store/profile/interface";
 
     export default Vue.extend({
         name: 'Login',
@@ -57,10 +58,10 @@
             store.commit('changeTitle', 'Login');
         },
         computed: {
-            ...mapState({
+            ...mapState<IStateProfile>({
                 status: state => state.auth.status,
                 message: state => state.auth.message,
-            }),
+            })
         },
         methods: {
             login: function () {
