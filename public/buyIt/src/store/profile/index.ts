@@ -22,6 +22,7 @@ const authModule: Module<any, any> = {
             state.message = 'Loading';
         },
         auth_success(state: any, token) {
+            localStorage.setItem('token', token);
             state.status = 'success';
             state.message = 'Successfully logged in, redirecting';
             state.token = token;
@@ -47,7 +48,6 @@ const authModule: Module<any, any> = {
                 })
                     .then(resp => {
                         const token = resp.data.data;
-                        localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token);
                         resolve(resp)
@@ -68,7 +68,6 @@ const authModule: Module<any, any> = {
                 })
                     .then(resp => {
                         const token = resp.data.data;
-                        localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
                         commit('auth_success', token);
                         resolve(resp)

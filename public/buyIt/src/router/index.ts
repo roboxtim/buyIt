@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
-import Home from '../components/Home.vue'
+import Purchases from '../components/Purchases.vue'
 import Login from '../components/Login.vue'
 import api from "@/api/utils";
 
@@ -10,7 +10,7 @@ const routes: Array<RouteConfig> = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Purchases
     },
     {
         path: '/login',
@@ -25,7 +25,7 @@ const router = new VueRouter({
 
 router.beforeEach(
     (to, from, next) => {
-        if(!api.token && to.path !== '/login') {
+        if(!localStorage.getItem('token') && to.path !== '/login') {
             next({
                 path: '/login'
             })
