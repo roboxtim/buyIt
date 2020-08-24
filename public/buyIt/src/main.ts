@@ -11,7 +11,7 @@ import api from "@/api/utils";
 Vue.use(VueMaterial);
 
 Vue.prototype.$http = Axios;
-if (api.token) Vue.prototype.$http.defaults.headers.common['Authorization'] = api.token;
+if (api.token) Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${api.token}`;
 
 Vue.config.productionTip = false;
 
