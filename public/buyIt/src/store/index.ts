@@ -12,7 +12,7 @@ export default new Vuex.Store({
         purchases,
     },
     state: {
-        pageTitle : 'Home',
+        pageTitle : 'Purchases',
         isAppLoading: false
     },
     mutations: {

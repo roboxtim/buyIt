@@ -31,6 +31,7 @@ const authModule: Module<any, any> = {
             state.status = 'error';
             state.message = payload.message;
             localStorage.removeItem('token');
+            location.reload();
         },
         change_message(state: any, message) {
             state.message = message;
@@ -48,7 +49,7 @@ const authModule: Module<any, any> = {
                 })
                     .then(resp => {
                         const token = resp.data.data;
-                        axios.defaults.headers.common['Authorization'] = token;
+                        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                         commit('auth_success', token);
                         resolve(resp)
                     })
@@ -68,7 +69,7 @@ const authModule: Module<any, any> = {
                 })
                     .then(resp => {
                         const token = resp.data.data;
-                        axios.defaults.headers.common['Authorization'] = token;
+                        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                         commit('auth_success', token);
                         resolve(resp)
                     })

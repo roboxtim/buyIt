@@ -2,14 +2,14 @@ import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
 import Purchases from '../components/Purchases.vue'
 import Login from '../components/Login.vue'
-import api from "@/api/utils";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        name: 'Home',
+        name: 'Purchases',
         component: Purchases
     },
     {
@@ -20,11 +20,13 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
+    mode: 'history',
     routes
 });
 
 router.beforeEach(
     (to, from, next) => {
+
         if(!localStorage.getItem('token') && to.path !== '/login') {
             next({
                 path: '/login'
@@ -32,6 +34,20 @@ router.beforeEach(
         } else {
             next();
         }
+
+
+    }
+);
+
+router.afterEach(
+    (to) => {
+
+        const path = routes.filter(obj => {
+            return obj.path === to.path;
+        });
+
+        if(path.length && path[0]) store.commit('changeTitle', path[0].name);
+
     }
 );
 

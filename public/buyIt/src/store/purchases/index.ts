@@ -15,11 +15,18 @@ const purchasesModule: Module<any, any> = {
     mutations: {
         loading : state => {
             state.status = 'loading'
-        }
+        },
+        get_purchases : (state, payload) => {
+            state.status = 'success';
+            state.purchases = payload;
+        },
+
     },
 
     actions: {
         getPurchases({commit}, data) {
+
+            commit('loading');
 
             return new Promise((resolve, reject) => {
                 axios({
@@ -28,10 +35,13 @@ const purchasesModule: Module<any, any> = {
                     method: 'GET'
                 })
                     .then(resp => {
+
+                        commit('get_purchases', resp.data.data);
+
                         resolve(resp)
                     })
                     .catch((err) => {
-                        commit('auth/auth_error', err.response.data);
+                        commit('auth/auth_error', err.response.data, { root: true });
                         reject(err);
                     })
             })

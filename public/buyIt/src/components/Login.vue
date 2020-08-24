@@ -73,8 +73,6 @@
             }
         },
         mounted: () => {
-            console.log('hello?');
-            store.commit('changeTitle', 'Login');
         },
         computed: {
             ...mapState<IStateProfile>({

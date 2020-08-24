@@ -1,5 +1,6 @@
 export interface IStatePurchases {
     status: string,
+    page: number,
     purchases: Array<Purchase>
 }
 
