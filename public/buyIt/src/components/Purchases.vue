@@ -1,6 +1,6 @@
 <template>
 
-    <div class="login">
+    <div class="purchases">
 
         <div class="container">
 
