@@ -21,15 +21,18 @@ const authModule: Module<any, any> = {
             state.status = 'loading';
             state.message = 'Loading';
         },
-        auth_success(state: any, payload) {
+        auth_success(state: any, token) {
             state.status = 'success';
-            state.token = payload.token;
-            state.user = payload.user;
+            state.message = 'Successfully logged in, redirecting';
+            state.token = token;
         },
         auth_error(state: any, payload) {
             state.status = 'error';
             state.message = payload.message;
             localStorage.removeItem('token');
+        },
+        change_message(state: any, message) {
+            state.message = message;
         }
     },
 
@@ -43,11 +46,31 @@ const authModule: Module<any, any> = {
                     data: user, method: 'POST'
                 })
                     .then(resp => {
-                        const token = resp.data.token;
-                        const user = resp.data.user;
+                        const token = resp.data.data;
                         localStorage.setItem('token', token);
                         axios.defaults.headers.common['Authorization'] = token;
-                        commit('auth_success', {token: token, user: user});
+                        commit('auth_success', token);
+                        resolve(resp)
+                    })
+                    .catch((err) => {
+                        commit('auth_error', err.response.data);
+                        reject(err);
+                    })
+            })
+        },
+        registration({commit}, user) {
+            commit('clear_state');
+            return new Promise((resolve, reject) => {
+                commit('auth_request');
+                axios({
+                    url: `${api.url}registration`,
+                    data: user, method: 'POST'
+                })
+                    .then(resp => {
+                        const token = resp.data.data;
+                        localStorage.setItem('token', token);
+                        axios.defaults.headers.common['Authorization'] = token;
+                        commit('auth_success', token);
                         resolve(resp)
                     })
                     .catch((err) => {
