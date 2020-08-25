@@ -10,7 +10,7 @@
 
                 <md-speed-dial>
 
-                    <md-speed-dial-target>
+                    <md-speed-dial-target @click="showCreateDialog = true">
                         <md-icon>add</md-icon>
                     </md-speed-dial-target>
 
@@ -24,9 +24,25 @@
                         md-description="Create new purchases list.">
                 </md-empty-state>
 
+
+                <md-list v-else>
+                    <md-list-item v-for="purchase in purchases">{{purchase.name}}</md-list-item>
+                </md-list>
+
             </div>
 
         </div>
+
+
+        <!--Create new-->
+        <md-dialog-prompt
+                :md-active.sync="showCreateDialog"
+                v-model="purchasesList"
+                md-title="Purchase list name"
+                md-input-maxlength="30"
+                md-input-placeholder="List name"
+                @md-confirm="savePurchases"
+                md-confirm-text="Save" />
 
     </div>
 
@@ -42,10 +58,12 @@
         name: 'Purchases',
         data: () => {
             return {
-
+                purchasesList : '',
+                showCreateDialog : false
             }
         },
-        mounted: function() {
+        mounted () {
+            console.log(this);
             this.getPurchases();
         },
         computed: {
@@ -60,7 +78,10 @@
         },
         methods: {
             getPurchases : function() {
-                this.$store.dispatch('purchases/getPurchases')
+                this.$store.dispatch('purchases/getPurchases');
+            },
+            savePurchases : function() {
+                this.$store.dispatch('purchases/savePurchases', {name : this.purchasesList})
                     .then((res) => {
                         //console.log(res);
                     })
