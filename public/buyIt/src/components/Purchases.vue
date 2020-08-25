@@ -26,7 +26,9 @@
 
 
                 <md-list v-else>
-                    <md-list-item v-for="purchase in purchases">{{purchase.name}}</md-list-item>
+                    <md-list-item v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
+                        {{purchase.name}}
+                    </md-list-item>
                 </md-list>
 
             </div>
@@ -63,7 +65,6 @@
             }
         },
         mounted () {
-            console.log(this);
             this.getPurchases();
         },
         computed: {
@@ -71,10 +72,8 @@
                 status: state => state.purchases.status,
                 purchases: state => state.purchases.purchases,
                 page: state => state.purchases.page,
+                purchasesNum : state => state.purchases.purchases.length
             }),
-            purchasesNum : (state) : number => {
-                return state.purchases.length;
-            }
         },
         methods: {
             getPurchases : function() {
