@@ -45,7 +45,7 @@ const purchasesModule: Module<any, any> = {
                         resolve(resp)
                     })
                     .catch((err) => {
-                        //commit('auth/auth_error', err.response.data, { root: true });
+                        commit('auth/auth_error', err.response, { root: true });
                         reject(err);
                     })
             })
@@ -67,7 +67,7 @@ const purchasesModule: Module<any, any> = {
                         resolve(resp)
                     })
                     .catch((err) => {
-                        commit('auth/auth_error', err.response.data, { root: true });
+                        commit('auth/auth_error', err.response, { root: true });
                         reject(err);
                     })
             })

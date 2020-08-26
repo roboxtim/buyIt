@@ -2,39 +2,36 @@
 
     <div class="purchases">
 
-        <div class="container">
+        <md-progress-spinner md-mode="indeterminate" v-if="status === 'loading'"></md-progress-spinner>
 
-            <md-progress-spinner md-mode="indeterminate" v-if="status === 'loading'"></md-progress-spinner>
+        <div class="inner" v-else>
 
-            <div class="inner" v-else>
-
-                <md-speed-dial>
+            <div class="centered">
+                <md-speed-dial class="add_purchases">
 
                     <md-speed-dial-target @click="showCreateDialog = true">
                         <md-icon>add</md-icon>
                     </md-speed-dial-target>
 
                 </md-speed-dial>
-
-                <md-empty-state
-                        v-if="!purchasesNum"
-                        class="md-primary"
-                        md-icon="list"
-                        md-label="Nothing here"
-                        md-description="Create new purchases list.">
-                </md-empty-state>
-
-
-                <md-list v-else>
-                    <md-list-item v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
-                        {{purchase.name}}
-                    </md-list-item>
-                </md-list>
-
             </div>
 
-        </div>
+            <md-empty-state
+                    v-if="!purchasesNum"
+                    class="md-primary"
+                    md-icon="list"
+                    md-label="Nothing here"
+                    md-description="Create new purchases list.">
+            </md-empty-state>
 
+
+            <md-list v-else>
+                <md-list-item v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
+                    {{purchase.name}}
+                </md-list-item>
+            </md-list>
+
+        </div>
 
         <!--Create new-->
         <md-dialog-prompt
@@ -44,7 +41,7 @@
                 md-input-maxlength="30"
                 md-input-placeholder="List name"
                 @md-confirm="savePurchases"
-                md-confirm-text="Save" />
+                md-confirm-text="Save"/>
 
     </div>
 
@@ -60,11 +57,11 @@
         name: 'Purchases',
         data: () => {
             return {
-                purchasesList : '',
-                showCreateDialog : false
+                purchasesList: '',
+                showCreateDialog: false
             }
         },
-        mounted () {
+        mounted() {
             this.getPurchases();
         },
         computed: {
@@ -72,15 +69,15 @@
                 status: state => state.purchases.status,
                 purchases: state => state.purchases.purchases,
                 page: state => state.purchases.page,
-                purchasesNum : state => state.purchases.purchases.length
+                purchasesNum: state => state.purchases.purchases.length
             }),
         },
         methods: {
-            getPurchases : function() {
+            getPurchases: function () {
                 this.$store.dispatch('purchases/getPurchases');
             },
-            savePurchases : function() {
-                this.$store.dispatch('purchases/savePurchases', {name : this.purchasesList})
+            savePurchases: function () {
+                this.$store.dispatch('purchases/savePurchases', {name: this.purchasesList})
                     .then((res) => {
                         //console.log(res);
                     })

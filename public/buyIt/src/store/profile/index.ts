@@ -29,9 +29,12 @@ const authModule: Module<any, any> = {
         },
         auth_error(state: any, payload) {
             state.status = 'error';
-            state.message = payload.message;
-            localStorage.removeItem('token');
-            location.reload();
+            state.message = payload.data.message;
+
+            if(payload.status === 401) {
+                localStorage.removeItem('token');
+                location.reload();
+            }
         },
         change_message(state: any, message) {
             state.message = message;
@@ -54,7 +57,7 @@ const authModule: Module<any, any> = {
                         resolve(resp)
                     })
                     .catch((err) => {
-                        commit('auth_error', err.response.data);
+                        commit('auth_error', err.response);
                         reject(err);
                     })
             })
@@ -74,7 +77,7 @@ const authModule: Module<any, any> = {
                         resolve(resp)
                     })
                     .catch((err) => {
-                        commit('auth_error', err.response.data);
+                        commit('auth_error', err.response);
                         reject(err);
                     })
             })

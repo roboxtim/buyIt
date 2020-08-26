@@ -25,4 +25,13 @@ body {
     bottom: 0;
     max-width: 700px;
     width: 100%;
+    z-index: 999;
+}
+
+.centered {
+    text-align: center;
+}
+
+.add_purchases {
+    margin: 0 auto 30px;
 }
