@@ -40,7 +40,7 @@ export function failureResponse(message: string, DATA: any, res: Response) {
 }
 
 export function insufficientParameters(res: Response) {
-    res.status(response_status_codes.bad_request).json({
+    res.status(response_status_codes.success).json({
         status: 'FAILURE',
         message: 'Insufficient parameters',
         data : {}

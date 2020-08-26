@@ -38,7 +38,7 @@ function failureResponse(message, DATA, res) {
 }
 exports.failureResponse = failureResponse;
 function insufficientParameters(res) {
-    res.status(model_1.response_status_codes.bad_request).json({
+    res.status(model_1.response_status_codes.success).json({
         status: 'FAILURE',
         message: 'Insufficient parameters',
         data: {}
