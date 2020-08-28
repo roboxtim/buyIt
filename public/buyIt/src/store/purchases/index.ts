@@ -24,6 +24,10 @@ const purchasesModule: Module<any, any> = {
             state.status = 'success';
             state.purchases = payload;
         },
+        delete_purchases : (state, data) => {
+            state.status = 'success';
+            state.purchases.splice(data.key, 1);
+        }
 
     },
 
@@ -64,6 +68,45 @@ const purchasesModule: Module<any, any> = {
 
                         commit('add_purchases', resp.data.data);
 
+                        resolve(resp)
+                    })
+                    .catch((err) => {
+                        commit('auth/auth_error', err.response, { root: true });
+                        reject(err);
+                    })
+            })
+        },
+        deletePurchases({commit}, data) {
+
+            commit('loading');
+
+            return new Promise((resolve, reject) => {
+                axios({
+                    url: `${api.url}purchases`,
+                    data: data,
+                    method: 'DELETE'
+                })
+                    .then(resp => {
+
+                        commit('delete_purchases', data);
+
+                        resolve(resp)
+                    })
+                    .catch((err) => {
+                        commit('auth/auth_error', err.response, { root: true });
+                        reject(err);
+                    })
+            })
+        },
+        updatePurchases({commit}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios({
+                    url: `${api.url}purchases`,
+                    data: data,
+                    method: 'PUT'
+                })
+                    .then(resp => {
                         resolve(resp)
                     })
                     .catch((err) => {

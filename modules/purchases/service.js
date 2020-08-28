@@ -9,7 +9,8 @@ class PurchasesService {
     getPurchases(query, callback) {
         schema_1.default.find(query, callback);
     }
-    updatePurchases(query, replace, callback) {
+    updatePurchases(query, replace, note, callback) {
+        schema_1.default.update(query, { $push: note });
         schema_1.default.updateOne(query, replace, callback);
     }
     deletePurchases(query, callback) {

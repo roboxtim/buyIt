@@ -5,5 +5,6 @@ export interface IPurchases {
     name: String;
     user_id: String;
     is_deleted?: Boolean;
+    created_at: Date,
     modification_notes: ModificationNote[]
 }

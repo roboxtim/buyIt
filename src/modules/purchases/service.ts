@@ -12,7 +12,8 @@ export default class PurchasesService {
         purchases.find(query, callback);
     }
 
-    public updatePurchases(query: any, replace: any, callback: any) {
+    public updatePurchases(query: any, replace: any, note : any, callback: any) {
+        purchases.update(query, {$push : note});
         purchases.updateOne(query, replace, callback);
     }
 

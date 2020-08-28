@@ -15,6 +15,7 @@ export class PurchasesController {
             const purchases_params: IPurchases = {
                 name: req.body.name,
                 user_id: req['user'].id,
+                created_at : new Date(Date.now()),
                 modification_notes: [{
                     modified_on: new Date(Date.now()),
                     modified_by: null,
@@ -62,6 +63,11 @@ export class PurchasesController {
                 },
                 {
                     name: req['body']['name']
+                },
+                {
+                    modified_on: new Date(Date.now()),
+                    modified_by: null,
+                    modification_note: 'Purchase updated'
                 },
                 (err: any, purchase_data: IPurchases) => {
                     if (err) {

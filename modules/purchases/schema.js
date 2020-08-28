@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     name: String,
     user_id: String,
+    created_at: Date,
     is_deleted: {
         type: Boolean,
         default: false

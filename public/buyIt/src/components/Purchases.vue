@@ -25,11 +25,26 @@
             </md-empty-state>
 
 
-            <md-list v-else>
-                <md-list-item v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
-                    {{purchase.name}}
-                </md-list-item>
-            </md-list>
+            <div class="purchases_list" v-else>
+
+                <md-list v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
+
+                    <md-list-item>
+
+                        <span class="md-list-item-text" v-html="purchase.name"></span>
+                        <md-field>
+                            <md-input v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
+                        </md-field>
+
+                        <md-button class="md-icon-button md-list-action" @click="deletePurchases(purchase._id, purchase_key)">
+                            <md-icon>delete</md-icon>
+                        </md-button>
+
+                    </md-list-item>
+
+                </md-list>
+
+            </div>
 
         </div>
 
@@ -50,8 +65,8 @@
 <script lang="ts">
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    import store from "@/store";
     import {IStatePurchases} from "@/store/purchases/interface";
+    import _ from 'lodash';
 
     export default Vue.extend({
         name: 'Purchases',
@@ -77,12 +92,20 @@
                 this.$store.dispatch('purchases/getPurchases');
             },
             savePurchases: function () {
-                this.$store.dispatch('purchases/savePurchases', {name: this.purchasesList})
+                let _this = this;
+                _this.$store.dispatch('purchases/savePurchases', {name: _this.purchasesList})
                     .then((res) => {
-                        //console.log(res);
-                    })
-                    .catch(err => console.log(err));
-            }
+                        _this.purchasesList = '';
+                    });
+            },
+            deletePurchases : function(_id,purchases_key) {
+                let _this = this;
+                if(!confirm('Delete this purchases list?')) return false;
+                _this.$store.dispatch('purchases/deletePurchases', {id: _id, key : purchases_key});
+            },
+            updatePurchases : _.throttle(function(this, purchase) {
+                this.$store.dispatch('purchases/updatePurchases', {id: purchase._id, name : purchase.name});
+            }),
         }
     });
 

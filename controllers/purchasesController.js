@@ -13,6 +13,7 @@ class PurchasesController {
             const purchases_params = {
                 name: req.body.name,
                 user_id: req['user'].id,
+                created_at: new Date(Date.now()),
                 modification_notes: [{
                         modified_on: new Date(Date.now()),
                         modified_by: null,
@@ -58,6 +59,10 @@ class PurchasesController {
                 user_id: req['user'].id
             }, {
                 name: req['body']['name']
+            }, {
+                modified_on: new Date(Date.now()),
+                modified_by: null,
+                modification_note: 'Purchase updated'
             }, (err, purchase_data) => {
                 if (err) {
                     service_1.mongoError(err, res);
