@@ -1,7 +1,12 @@
 import {IPurchases} from './model';
 import purchases from './schema';
+import purchase from "../purchase/schema";
 
 export default class PurchasesService {
+
+    public checkPurchase(query: any, callback: any) {
+        purchases.find(query, callback);
+    }
 
     public createPurchases(purchase_params: IPurchases, callback: any) {
         const _session = new purchases(purchase_params);
@@ -13,7 +18,6 @@ export default class PurchasesService {
     }
 
     public updatePurchases(query: any, replace: any, note : any, callback: any) {
-        purchases.update(query, {$push : note});
         purchases.updateOne(query, replace, callback);
     }
 

@@ -7,12 +7,14 @@ const mongoose = require("mongoose");
 const environment_1 = require("../environment");
 const user_routes_1 = require("../routes/user_routes");
 const purchases_routes_1 = require("../routes/purchases_routes");
+const purchase_routes_1 = require("../routes/purchase_routes");
 const path = require('path');
 class App {
     constructor() {
         this.mongoUrl = 'mongodb://localhost/' + environment_1.default.getDBName();
         this.user_routes = new user_routes_1.UserRoutes();
         this.purchases_routes = new purchases_routes_1.PurchasesRoutes();
+        this.purchase_routes = new purchase_routes_1.PurchaseRoutes();
         this.app = express();
         this.config();
         this.mongoSetup();
@@ -22,6 +24,7 @@ class App {
         });
         this.user_routes.route(this.app);
         this.purchases_routes.route(this.app);
+        this.purchase_routes.route(this.app);
     }
     config() {
         this.app.use(cors());

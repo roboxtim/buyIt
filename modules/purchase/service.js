@@ -1,22 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const schema_1 = require("./schema");
-class PurchasesService {
-    checkPurchase(query, callback) {
-        schema_1.default.find(query, callback);
-    }
-    createPurchases(purchase_params, callback) {
+class PurchaseService {
+    createPurchase(purchase_params, callback) {
         const _session = new schema_1.default(purchase_params);
         _session.save(callback);
     }
-    getPurchases(query, callback) {
+    getPurchase(query, callback) {
         schema_1.default.find(query, callback);
     }
-    updatePurchases(query, replace, note, callback) {
+    updatePurchase(query, replace, callback) {
         schema_1.default.updateOne(query, replace, callback);
     }
-    deletePurchases(query, callback) {
+    deletePurchase(query, callback) {
         schema_1.default.deleteOne(query, callback);
     }
 }
-exports.default = PurchasesService;
+exports.default = PurchaseService;

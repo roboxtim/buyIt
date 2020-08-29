@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 import environment from "../environment";
 import {UserRoutes} from "../routes/user_routes";
 import {PurchasesRoutes} from "../routes/purchases_routes";
+import {PurchaseRoutes} from "../routes/purchase_routes";
 
 const path = require('path');
 
@@ -15,6 +16,7 @@ class App {
 
     private user_routes: UserRoutes = new UserRoutes();
     private purchases_routes: PurchasesRoutes = new PurchasesRoutes();
+    private purchase_routes: PurchaseRoutes = new PurchaseRoutes();
 
     constructor() {
         this.app = express();
@@ -29,6 +31,7 @@ class App {
 
         this.user_routes.route(this.app);
         this.purchases_routes.route(this.app);
+        this.purchase_routes.route(this.app);
     }
 
     private config(): void {

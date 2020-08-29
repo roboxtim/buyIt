@@ -79,10 +79,6 @@ class PurchasesController {
     deletePurchases(req, res) {
         if (req['user'] &&
             req['body']['id']) {
-            console.log({
-                _id: req['body']['id'],
-                user_id: req['user'].id,
-            });
             this.purchases_service.deletePurchases({
                 _id: req['body']['id'],
                 user_id: req['user'].id,
