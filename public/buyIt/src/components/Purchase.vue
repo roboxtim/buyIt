@@ -1,6 +1,6 @@
 <template>
 
-    <div class="purchases">
+    <div class="purchase">
 
         <md-progress-spinner md-mode="indeterminate" v-if="status === 'loading'"></md-progress-spinner>
 
@@ -21,7 +21,7 @@
                     class="md-primary"
                     md-icon="list"
                     md-label="Nothing here"
-                    md-description="Create new purchases list.">
+                    md-description="Create new purchase in list.">
             </md-empty-state>
 
 
@@ -31,17 +31,12 @@
 
                     <md-list-item>
 
-                        <span class="md-list-item-text" v-html="purchase.name"></span>
-
                         <md-field>
-                            <md-input v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
+                            <md-input size="10" v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
                         </md-field>
 
-                        <md-button class="md-icon-button md-list-action" @click="$router.push('/list/' + purchase._id)">
-                            <md-icon>arrow_forward</md-icon>
-                        </md-button>
-
-                        <md-button class="md-icon-button md-list-action" @click="deletePurchases(purchase._id, purchase_key)">
+                        <md-button class="md-icon-button md-list-action"
+                                   @click="deletePurchases(purchase._id, purchase_key)">
                             <md-icon>delete</md-icon>
                         </md-button>
 
@@ -57,9 +52,9 @@
         <md-dialog-prompt
                 :md-active.sync="showCreateDialog"
                 v-model="purchasesList"
-                md-title="Purchase list name"
+                md-title="Purchase name"
                 md-input-maxlength="30"
-                md-input-placeholder="List name"
+                md-input-placeholder="Enter purchase name"
                 @md-confirm="savePurchases"
                 md-confirm-text="Save"/>
 
@@ -70,7 +65,7 @@
 <script lang="ts">
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    import {IStatePurchases} from "@/store/purchases/interface";
+    import {IStatePurchase} from "@/store/purchase/interface";
     import _ from 'lodash';
 
     export default Vue.extend({
@@ -78,38 +73,51 @@
         data: () => {
             return {
                 purchasesList: '',
-                showCreateDialog: false
+                showCreateDialog: false,
             }
         },
         mounted() {
             this.getPurchases();
         },
         computed: {
-            ...mapState<IStatePurchases>({
-                status: state => state.purchases.status,
-                purchases: state => state.purchases.purchases,
-                page: state => state.purchases.page,
-                purchasesNum: state => state.purchases.purchases.length
+            ...mapState<IStatePurchase>({
+                status: state => state.purchase.status,
+                purchases: state => state.purchase.purchases,
+                page: state => state.purchase.page,
+                purchasesNum: state => state.purchase.purchases.length
             }),
         },
         methods: {
+            listID: function () {
+                return this.$route.params.list_id
+            },
             getPurchases: function () {
-                this.$store.dispatch('purchases/getPurchases');
+                let _this = this;
+                this.$store.dispatch('purchase/getPurchase', {list_id: _this.listID()});
             },
             savePurchases: function () {
                 let _this = this;
-                _this.$store.dispatch('purchases/savePurchases', {name: _this.purchasesList})
+                _this.$store.dispatch('purchase/savePurchase', {name: _this.purchasesList, list_id: _this.listID()})
                     .then((res) => {
                         _this.purchasesList = '';
                     });
             },
-            deletePurchases : function(_id,purchases_key) {
+            deletePurchases: function (_id, purchases_key) {
                 let _this = this;
-                if(!confirm('Delete this purchases list?')) return false;
-                _this.$store.dispatch('purchases/deletePurchases', {id: _id, key : purchases_key});
+                if (!confirm('Delete this purchases list?')) return false;
+                _this.$store.dispatch('purchase/deletePurchase', {
+                    id: _id,
+                    key: purchases_key,
+                    list_id: _this.listID()
+                });
             },
-            updatePurchases : _.throttle(function(this, purchase) {
-                this.$store.dispatch('purchases/updatePurchases', {id: purchase._id, name : purchase.name});
+            updatePurchases: _.throttle(function (this, purchase) {
+                let _this = this;
+                this.$store.dispatch('purchase/updatePurchase', {
+                    id: purchase._id,
+                    name: purchase.name,
+                    list_id: _this.listID()
+                });
             }),
         }
     });

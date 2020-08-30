@@ -53,12 +53,12 @@ export class PurchaseController {
 
     public getPurchase(req: Request, res: Response) {
         if (req['user'] &&
-            req['body'].list_id) {
+            req['query'].list_id) {
 
-            this.checkList(req.body.list_id, req['user'].id, res);
+            this.checkList(req['query'].list_id, req['user'].id, res);
 
             this.purchase_service.getPurchase({
-                list_id: req['body'].list_id
+                list_id: req['query'].list_id
             }, (err: any, purchase_data: IPurchase) => {
                 if (err) {
                     mongoError(err, res);

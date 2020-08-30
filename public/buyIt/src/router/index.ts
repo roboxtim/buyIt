@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, {RouteConfig} from 'vue-router'
 import Purchases from '../components/Purchases.vue'
+import Purchase from '../components/Purchase.vue'
 import Login from '../components/Login.vue'
 import store from "@/store";
 
@@ -11,6 +12,14 @@ const routes: Array<RouteConfig> = [
         path: '/',
         name: 'Purchases',
         component: Purchases
+    },
+    {
+        path: '/list/:list_id',
+        meta: {
+            path : 'list/'
+        },
+        name: 'List purchases',
+        component: Purchase
     },
     {
         path: '/login',
@@ -42,11 +51,9 @@ router.beforeEach(
 router.afterEach(
     (to) => {
 
-        const path = routes.filter(obj => {
-            return obj.path === to.path;
-        });
+        const path: any = (to['matched'].length) ? to['matched'][0] : [];
 
-        if(path.length && path[0]) store.commit('changeTitle', path[0].name);
+        if(path) store.commit('changeTitle', path.name);
 
     }
 );
