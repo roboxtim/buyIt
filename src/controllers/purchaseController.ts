@@ -36,6 +36,7 @@ export class PurchaseController {
                 name: req.body.name,
                 list_id: req.body.list_id,
                 created_at: new Date(Date.now()),
+                completed: false,
             };
 
             this.purchase_service.createPurchase(purchases_params, (err: any, purchase_data: IPurchase) => {
@@ -116,6 +117,34 @@ export class PurchaseController {
                         mongoError(err, res);
                     } else {
                         successResponse('Delete purchase', purchase_data, res);
+                    }
+                });
+        } else {
+            insufficientParameters(res);
+        }
+    }
+
+    public purchaseStatus(req: Request, res: Response) {
+        if (req['user'] &&
+            req['body']['id'] &&
+            req['body']['list_id'] &&
+            typeof req['body']['completed'] !== 'undefined') {
+
+            this.checkList(req['body']['list_id'], req['user'].id, res);
+
+            this.purchase_service.updatePurchase(
+                {
+                    _id : req['body'].id,
+                    list_id: req['body'].list_id
+                },
+                {
+                    completed: req['body']['completed']
+                },
+                (err: any, purchase_data: IPurchase) => {
+                    if (err) {
+                        mongoError(err, res);
+                    } else {
+                        successResponse('Update purchase', purchase_data, res);
                     }
                 });
         } else {

@@ -117,6 +117,22 @@ const purchaseModule: Module<any, any> = {
                     })
             })
         },
+        purchaseStatus({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios({
+                    url: `${api.url}purchase_status`,
+                    data: data,
+                    method: 'PUT'
+                })
+                    .then(resp => {
+                        resolve(resp)
+                    })
+                    .catch((err) => {
+                        commit('auth/auth_error', err.response, { root: true });
+                        reject(err);
+                    })
+            })
+        },
     }
 };
 

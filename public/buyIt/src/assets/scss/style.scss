@@ -35,3 +35,16 @@ body {
 .add_purchases {
     margin: 0 auto 30px;
 }
+
+.purchases_list {
+    .delete {
+        text-align: right;
+    }
+    .md-primary {
+        .delete {
+            .md-icon {
+                color: #fff;
+            }
+        }
+    }
+}

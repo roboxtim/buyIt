@@ -3,4 +3,5 @@ export interface IPurchase {
     name: String;
     list_id: String;
     created_at: Date;
+    completed: Boolean;
 }

@@ -23,5 +23,9 @@ export class PurchaseRoutes {
         app.delete('/purchase', authenticateJWT, (req: Request, res: Response) => {
             this.purchase_controller.deletePurchase(req, res);
         });
+
+        app.put('/purchase_status', authenticateJWT, (req: Request, res: Response) => {
+            this.purchase_controller.purchaseStatus(req, res);
+        });
     }
 }

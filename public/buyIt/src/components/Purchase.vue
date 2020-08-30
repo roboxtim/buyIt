@@ -27,22 +27,25 @@
 
             <div class="purchases_list" v-else>
 
-                <md-list v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
+                <md-table md-card>
 
-                    <md-list-item>
+                    <md-table-row v-for="(purchase, purchase_key) in purchases"
+                                  @click="completePurchase(purchase)"
+                                  :class="{'md-selected-single md-primary' : purchase['completed']}"
+                                  v-bind:key="purchase_key" md-selectable="single">
 
-                        <md-field>
-                            <md-input size="10" v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
-                        </md-field>
+                        <md-table-cell md-label="Name">{{ purchase.name }}</md-table-cell>
 
-                        <md-button class="md-icon-button md-list-action"
-                                   @click="deletePurchases(purchase._id, purchase_key)">
-                            <md-icon>delete</md-icon>
-                        </md-button>
+                        <md-table-cell md-label="Delete" class="delete">
+                            <md-button class="md-icon-button md-list-action"
+                                       @click="deletePurchases(purchase._id, purchase_key)">
+                                <md-icon>delete</md-icon>
+                            </md-button>
+                        </md-table-cell>
 
-                    </md-list-item>
+                    </md-table-row>
 
-                </md-list>
+                </md-table>
 
             </div>
 
@@ -119,6 +122,21 @@
                     list_id: _this.listID()
                 });
             }),
+            completePurchase : function(purchase) {
+                let _this = this;
+
+                let completed = !purchase['completed'];
+
+                this.$store.dispatch('purchase/purchaseStatus', {
+                    id: purchase._id,
+                    name: purchase.name,
+                    list_id: _this.listID(),
+                    completed: completed,
+                });
+
+                _this.$set(purchase, 'completed', completed);
+
+            }
         }
     });
 

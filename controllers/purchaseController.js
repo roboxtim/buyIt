@@ -29,6 +29,7 @@ class PurchaseController {
                 name: req.body.name,
                 list_id: req.body.list_id,
                 created_at: new Date(Date.now()),
+                completed: false,
             };
             this.purchase_service.createPurchase(purchases_params, (err, purchase_data) => {
                 if (err) {
@@ -100,6 +101,30 @@ class PurchaseController {
                 }
                 else {
                     service_1.successResponse('Delete purchase', purchase_data, res);
+                }
+            });
+        }
+        else {
+            service_1.insufficientParameters(res);
+        }
+    }
+    purchaseStatus(req, res) {
+        if (req['user'] &&
+            req['body']['id'] &&
+            req['body']['list_id'] &&
+            typeof req['body']['completed'] !== 'undefined') {
+            this.checkList(req['body']['list_id'], req['user'].id, res);
+            this.purchase_service.updatePurchase({
+                _id: req['body'].id,
+                list_id: req['body'].list_id
+            }, {
+                completed: req['body']['completed']
+            }, (err, purchase_data) => {
+                if (err) {
+                    service_1.mongoError(err, res);
+                }
+                else {
+                    service_1.successResponse('Update purchase', purchase_data, res);
                 }
             });
         }

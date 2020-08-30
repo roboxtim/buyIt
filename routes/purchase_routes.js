@@ -20,6 +20,9 @@ class PurchaseRoutes {
         app.delete('/purchase', service_1.authenticateJWT, (req, res) => {
             this.purchase_controller.deletePurchase(req, res);
         });
+        app.put('/purchase_status', service_1.authenticateJWT, (req, res) => {
+            this.purchase_controller.purchaseStatus(req, res);
+        });
     }
 }
 exports.PurchaseRoutes = PurchaseRoutes;
