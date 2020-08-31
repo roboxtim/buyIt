@@ -5,6 +5,12 @@
         <md-bottom-bar md-type="shift">
 
             <md-bottom-bar-item id="bottom-bar-item-home"
+                                md-icon="arrow_back"
+                                @click="goBack()">
+
+            </md-bottom-bar-item>
+
+            <md-bottom-bar-item id="bottom-bar-item-home"
                                 md-icon="account_box"
                                 @click="goToRoute('/login')">
 
@@ -41,6 +47,9 @@
         },
 
         methods : {
+            goBack() {
+                router.go(-1);
+            },
             goToRoute(route) {
                 if(route !== this.$route.path) this.$router.push(route);
             }
