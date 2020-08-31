@@ -30,8 +30,8 @@
                     <md-table-row v-for="(purchase, purchase_key) in purchases"
                                   v-bind:key="purchase_key">
 
-                        <md-table-cell class="content" @click="goToPurchase(purchase)">
-                            <div class="inner">
+                        <md-table-cell class="content">
+                            <div class="inner" @click="goToPurchase(purchase)">
 
                                 <span class="md-list-item-text" v-html="purchase.name" v-if="!purchase['edit']"></span>
 

@@ -33,7 +33,9 @@
                                       :class="{'md-selected-single md-primary' : purchase['completed']}"
                                       v-bind:key="purchase_key" md-selectable="single">
 
-                            <md-table-cell md-label="Name">{{ purchase.name }}</md-table-cell>
+                            <md-table-cell class="content">
+                                <div class="inner" v-html="purchase.name"></div>
+                            </md-table-cell>
 
                             <md-table-cell md-label="Delete" class="delete">
                                 <md-button class="md-icon-button md-list-action"
