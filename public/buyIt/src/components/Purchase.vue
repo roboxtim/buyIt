@@ -6,7 +6,7 @@
 
         <div class="inner" v-else>
 
-            <div class="centered">
+            <div class="container">
                 <md-speed-dial class="add_purchases">
 
                     <md-speed-dial-target @click="showCreateDialog = true">
@@ -14,41 +14,41 @@
                     </md-speed-dial-target>
 
                 </md-speed-dial>
+
+                <md-empty-state
+                        v-if="!purchasesNum"
+                        class="md-primary"
+                        md-icon="list"
+                        md-label="Nothing here"
+                        md-description="Create new purchase in list.">
+                </md-empty-state>
+
+
+                <div class="purchases_list" v-else>
+
+                    <md-table md-card>
+
+                        <md-table-row v-for="(purchase, purchase_key) in purchases"
+                                      @click="completePurchase(purchase)"
+                                      :class="{'md-selected-single md-primary' : purchase['completed']}"
+                                      v-bind:key="purchase_key" md-selectable="single">
+
+                            <md-table-cell md-label="Name">{{ purchase.name }}</md-table-cell>
+
+                            <md-table-cell md-label="Delete" class="delete">
+                                <md-button class="md-icon-button md-list-action"
+                                           @click="deletePurchases(purchase._id, purchase_key)">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </md-table-cell>
+
+                        </md-table-row>
+
+                    </md-table>
+
+                </div>
+
             </div>
-
-            <md-empty-state
-                    v-if="!purchasesNum"
-                    class="md-primary"
-                    md-icon="list"
-                    md-label="Nothing here"
-                    md-description="Create new purchase in list.">
-            </md-empty-state>
-
-
-            <div class="purchases_list" v-else>
-
-                <md-table md-card>
-
-                    <md-table-row v-for="(purchase, purchase_key) in purchases"
-                                  @click="completePurchase(purchase)"
-                                  :class="{'md-selected-single md-primary' : purchase['completed']}"
-                                  v-bind:key="purchase_key" md-selectable="single">
-
-                        <md-table-cell md-label="Name">{{ purchase.name }}</md-table-cell>
-
-                        <md-table-cell md-label="Delete" class="delete">
-                            <md-button class="md-icon-button md-list-action"
-                                       @click="deletePurchases(purchase._id, purchase_key)">
-                                <md-icon>delete</md-icon>
-                            </md-button>
-                        </md-table-cell>
-
-                    </md-table-row>
-
-                </md-table>
-
-            </div>
-
         </div>
 
         <!--Create new-->
@@ -122,7 +122,7 @@
                     list_id: _this.listID()
                 });
             }),
-            completePurchase : function(purchase) {
+            completePurchase: function (purchase) {
                 let _this = this;
 
                 let completed = !purchase['completed'];

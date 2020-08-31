@@ -4,17 +4,15 @@
 
         <md-progress-spinner md-mode="indeterminate" v-if="status === 'loading'"></md-progress-spinner>
 
-        <div class="inner" v-else>
+        <div class="inner container" v-else>
 
-            <div class="centered">
-                <md-speed-dial class="add_purchases">
+            <md-speed-dial class="add_purchases">
 
-                    <md-speed-dial-target @click="showCreateDialog = true">
-                        <md-icon>add</md-icon>
-                    </md-speed-dial-target>
+                <md-speed-dial-target @click="showCreateDialog = true">
+                    <md-icon>add</md-icon>
+                </md-speed-dial-target>
 
-                </md-speed-dial>
-            </div>
+            </md-speed-dial>
 
             <md-empty-state
                     v-if="!purchasesNum"
@@ -27,27 +25,41 @@
 
             <div class="purchases_list" v-else>
 
-                <md-list v-for="(purchase, purchase_key) in purchases" v-bind:key="purchase_key">
+                <md-table md-card>
 
-                    <md-list-item>
+                    <md-table-row v-for="(purchase, purchase_key) in purchases"
+                                  v-bind:key="purchase_key">
 
-                        <span class="md-list-item-text" v-html="purchase.name"></span>
+                        <md-table-cell class="content" @click="goToPurchase(purchase)">
+                            <div class="inner">
 
-                        <md-field>
-                            <md-input v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
-                        </md-field>
+                                <span class="md-list-item-text" v-html="purchase.name" v-if="!purchase['edit']"></span>
 
-                        <md-button class="md-icon-button md-list-action" @click="$router.push('/list/' + purchase._id)">
-                            <md-icon>arrow_forward</md-icon>
-                        </md-button>
+                                <md-field v-else>
+                                    <md-input v-model="purchase.name" @keyup="updatePurchases(purchase)"></md-input>
+                                </md-field>
 
-                        <md-button class="md-icon-button md-list-action" @click="deletePurchases(purchase._id, purchase_key)">
-                            <md-icon>delete</md-icon>
-                        </md-button>
+                            </div>
 
-                    </md-list-item>
+                        </md-table-cell>
 
-                </md-list>
+                        <md-table-cell class="edit">
+                            <md-button class="md-icon-button md-list-action"
+                                       @click="$set(purchase, 'edit', !purchase['edit'])">
+                                <md-icon>edit</md-icon>
+                            </md-button>
+                        </md-table-cell>
+
+                        <md-table-cell md-label="Delete" class="delete">
+                            <md-button class="md-icon-button md-list-action"
+                                       @click="deletePurchases(purchase._id, purchase_key)">
+                                <md-icon>delete</md-icon>
+                            </md-button>
+                        </md-table-cell>
+
+                    </md-table-row>
+
+                </md-table>
 
             </div>
 
@@ -72,6 +84,7 @@
     import {mapState} from 'vuex';
     import {IStatePurchases} from "@/store/purchases/interface";
     import _ from 'lodash';
+    import router from '../router';
 
     export default Vue.extend({
         name: 'Purchases',
@@ -93,6 +106,11 @@
             }),
         },
         methods: {
+            goToPurchase: function (purchase) {
+                let _this = this;
+                console.log(purchase);
+                if (!_this['edit']) router.push('/list/' + purchase._id);
+            },
             getPurchases: function () {
                 this.$store.dispatch('purchases/getPurchases');
             },
@@ -103,13 +121,13 @@
                         _this.purchasesList = '';
                     });
             },
-            deletePurchases : function(_id,purchases_key) {
+            deletePurchases: function (_id, purchases_key) {
                 let _this = this;
-                if(!confirm('Delete this purchases list?')) return false;
-                _this.$store.dispatch('purchases/deletePurchases', {id: _id, key : purchases_key});
+                if (!confirm('Delete this purchases list?')) return false;
+                _this.$store.dispatch('purchases/deletePurchases', {id: _id, key: purchases_key});
             },
-            updatePurchases : _.throttle(function(this, purchase) {
-                this.$store.dispatch('purchases/updatePurchases', {id: purchase._id, name : purchase.name});
+            updatePurchases: _.throttle(function (this, purchase) {
+                this.$store.dispatch('purchases/updatePurchases', {id: purchase._id, name: purchase.name});
             }),
         }
     });

@@ -1,12 +1,21 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+html {
+    height  : 100%;
+    overflow: hidden;
+    position: relative;
+}
+
 body {
+    height  : 100%;
+    overflow: auto;
+    position: relative;
     background-color: #f1f1f1;
 }
 
+
 #app {
     position: relative;
-    min-height: 100vh;
     padding-bottom: 56px;
     max-width: 700px;
     margin: 0 auto;
@@ -33,17 +42,53 @@ body {
 }
 
 .add_purchases {
-    margin: 0 auto 30px;
+    margin: 10px auto 20px;
 }
 
 .purchases_list {
-    .delete {
-        text-align: right;
-    }
-    .md-primary {
+    table {
+        table-layout: fixed;
+        .content {
+            width: 35%;
+
+            .md-table-cell-container {
+                padding: 0 !important;
+
+                .inner {
+                    display: flex;
+                    align-items: center;
+                    padding: 0 15px;
+                    height: 50px;
+
+                    .md-list-item-text {
+                        display: block;
+                        width: 100%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+
+        .delete,
+        .edit {
+            width: 30px;
+
+            .md-table-cell-container {
+                padding: 0 !important;
+            }
+        }
+
         .delete {
-            .md-icon {
-                color: #fff;
+            text-align: right;
+        }
+
+        .md-primary {
+            .delete {
+                .md-icon {
+                    color: #fff;
+                }
             }
         }
     }

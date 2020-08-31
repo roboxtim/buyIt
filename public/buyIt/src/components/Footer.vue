@@ -5,14 +5,14 @@
         <md-bottom-bar md-type="shift">
 
             <md-bottom-bar-item id="bottom-bar-item-home"
-                                md-icon="list"
-                                @click="goToRoute('/')">
+                                md-icon="account_box"
+                                @click="goToRoute('/login')">
 
             </md-bottom-bar-item>
 
             <md-bottom-bar-item id="bottom-bar-item-home"
-                                md-icon="account_box"
-                                @click="goToRoute('/login')">
+                                md-icon="list"
+                                @click="goToRoute('/')">
 
             </md-bottom-bar-item>
 
