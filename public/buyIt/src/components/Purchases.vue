@@ -2,7 +2,9 @@
 
     <div class="purchases">
 
-        <md-progress-spinner md-mode="indeterminate" v-if="status === 'loading'"></md-progress-spinner>
+        <div class="loader" v-if="status === 'loading'">
+            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+        </div>
 
         <div class="inner container" v-else>
 
